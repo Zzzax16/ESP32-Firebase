@@ -2,8 +2,8 @@
 #include <Firebase_ESP_Client.h>
 #include <time.h>
 
-#define WIFI_SSID "INNO-Carmen Proanio"
-#define WIFI_PASSWORD "LPVC1966"
+#define WIFI_SSID "4 WEB B - ito"
+#define WIFI_PASSWORD "acosta2025"
 #define API_KEY "AIzaSyCs9998eFyNORaiDXo9b2eZuVyGXYrCxvE"
 #define DATABASE_URL "https://desarrollo-de-apps-movil-f18ce-default-rtdb.firebaseio.com/"
 
@@ -55,7 +55,8 @@ void setup() {
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 
-  configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+  configTime(-5 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+
 }
 
 void loop() {
@@ -118,7 +119,9 @@ void consultarFirebase() {
 }
 
 void actualizarFirebase(bool estado) {
+  String fechaHora = obtenerFechaHora();
   Firebase.RTDB.setBool(&fbdo, "/ESTADO_OBJETO/estado", estado);
+  Firebase.RTDB.setString(&fbdo, "/ESTADO_OBJETO/fecha", fechaHora);
 }
 
 void registrarHistorial(String accion) {
